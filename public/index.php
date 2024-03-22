@@ -8,10 +8,12 @@
 
 <body>
     <?php include '../partials/header.php'; ?>
-    <?php include '../partials/nav.php'; ?>
-    <section>
-        <h2>Welcome to Magnet Share</h2>
-        <p>Share your magnet links with the world!</p>
+    <section class='content-box'>
+        <div>
+            <?php include '../partials/nav.php'; ?>
+            <h2>Welcome to Magnet Share</h2>
+            <p>Share your magnet links with the world!</p>
+        </div>
     </section>
     <?php include '../partials/footer.php'; ?>
 </body>
