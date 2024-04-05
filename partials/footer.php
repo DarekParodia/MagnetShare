@@ -1,3 +1,3 @@
 <footer>
-    <h1>mmm stupka</h1>
+    <h3>Made by DarekParodia</h3>
 </footer>
