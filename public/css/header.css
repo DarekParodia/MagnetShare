@@ -1,0 +1,20 @@
+header{
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+}
+header > div{
+    height: 40px;
+}
+header > div > img{
+    height: 100%;
+    width: 100%;
+}
+header h3{
+    margin-left: 10px;
+}

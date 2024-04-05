@@ -1,4 +1,4 @@
 <header>
-    <img src="img/logo.png" alt="" srcset="" width="100px">
-    <h1>Logo itp</h1>
+    <div><img src="img/logo.png" alt="" srcset="" width="100px"></div>
+    <h3>Magnet Share</h3>
 </header>
