@@ -1,11 +1,21 @@
-ul, li {
+.navbar ul,
+.navbar li {
+    list-style: none;
     margin: 0;
     padding: 0;
-    list-style: none;
 }
 
 .navbar {
-    padding: 10px;
+    padding-top: 10px;
+}
+
+.navbar > hr {
+    width: 100%;
+}
+
+.navbar > div {
+    display: flex;
+    justify-content: space-between;
 }
 
 .navbar ul {
