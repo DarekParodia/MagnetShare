@@ -35,6 +35,22 @@ function invalidPassword()
 {
     return "<p class='error'>Invalid password</p>";
 }
+function loginRegexMismatch()
+{
+    return "<p class='error'>Login must contain only letters and digits, and be 3 to 20 characters long 1</p>";
+}
+function emailRegexMismatch()
+{
+    return "<p class='error'>Invalid email</p>";
+}
+function emailExists()
+{
+    return "<p class='error'>Email already in use</p>";
+}
+function passwordRegexMismatch()
+{
+    return "<p class='error'>Password must contain at least one lowercase letter, one uppercase letter, one digit, and be 8 characters long</p>";
+}
 
 
 function error($message)

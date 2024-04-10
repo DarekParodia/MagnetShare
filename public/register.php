@@ -1,11 +1,21 @@
 <?php
-require('../connection.php');
-require('../announcements.php');
+session_start();
+require_once(__DIR__ . '/../connection.php');
+require_once(__DIR__ . '/../announcements.php');
 
 function handleRegister()
 {
+    /**
+     * Regular expressions for validating login and password fields.
+     *
+     * $login_regex: This regular expression validates the login field. It allows only alphanumeric characters (a-z, A-Z, 0-9) and must be between 3 and 20 characters long.
+     *
+     * $password_regex: This regular expression validates the password field. It requires at least one lowercase letter, one uppercase letter, one digit, and must be at least 8 characters long. It allows alphanumeric characters (a-z, A-Z, 0-9).
+     */
     $login_regex = "/^[a-zA-Z0-9]{3,20}$/";
     $password_regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/";
+
+    loginRedirect(); // if user is logged in, redirect to account.php
 
     if (isset($_POST['login']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password2'])) {
         $login = $_POST['login'];
@@ -13,14 +23,15 @@ function handleRegister()
         $password = $_POST['password'];
         $password2 = $_POST['password2'];
 
+        // Validate the input
         if ($password != $password2) {
             echo mismatchedPasswords();
         } else if (!preg_match($login_regex, $login)) {
-            echo invalidLogin();
+            echo loginRegexMismatch();
         } else if (!preg_match($password_regex, $password)) {
-            echo invalidPassword();
+            echo passwordRegexMismatch()();
         } else {
-            $conn = connectToDatabase();
+            $conn = connectToDatabase(); // Connect to the database
 
             if (getAccountByLogin($conn, $login) != false) {
                 echo accountExists();
@@ -30,10 +41,11 @@ function handleRegister()
                 return;
             }
 
-            $password = password_hash($password, PASSWORD_DEFAULT);
+            $password = password_hash($password, PASSWORD_BCRYPT); // Hash the password
             $sql = "INSERT INTO users (username, email, password) VALUES ('$login', '$email', '$password')";
             if ($conn->query($sql) === TRUE) {
                 echo accountCreated();
+                loginUser($conn, $login);  // Log in the user
             } else {
                 echo error($conn->error);
             }
@@ -46,6 +58,7 @@ function handleRegister()
 
 <head>
     <?php include '../partials/head.php'; ?>
+    <script src="./js/register.js"></script>
     <title>Magnet Share</title>
 </head>
 
@@ -57,8 +70,8 @@ function handleRegister()
             <div class='center-content'>
                 <h2 class='low-margin'>Register</h2>
                 <p class='low-margin'>Create a new account or login <a href="login.php">here</a> if you arleady have one</p>
-                <?php handleRegister() ?>
-                <form action="register.php" method="post" class='vert-input'>
+                <div id="warnbox"><?php handleRegister() ?></div>
+                <form action="register.php" method="post" class='vert-input' id="register-form">
                     <label for="login">Login</label>
                     <input type="text" name="login" id="login" required placeholder="iamaim">
                     <label for="email">Email</label>
@@ -67,7 +80,7 @@ function handleRegister()
                     <input type="password" name="password" id="password" required placeholder="mommy123">
                     <label for="password2">Confirm Password</label>
                     <input type="password" name="password2" id="password2" required placeholder="mommy123">
-                    <button type="submit">Register</button>
+                    <button type="submit" id="submit-button">Register</button>
                 </form>
             </div>
         </div>

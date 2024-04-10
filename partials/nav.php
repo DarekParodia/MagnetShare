@@ -7,8 +7,15 @@
             <li><a href="contact.php" class='a-btn'>Contact</a></li>
         </ul>
         <ul>
-            <li><a href="login.php" class='a-btn'>Login</a></li>
-            <li><a href="register.php" class='a-btn'>Register</a></li>
+            <?php require_once(__DIR__ . '/../connection.php');
+            @session_start();
+            if (!isUserLoggedIn()) { ?>
+                <li><a href="login.php" class='a-btn'>Login</a></li>
+                <li><a href="register.php" class='a-btn'>Register</a></li>
+            <?php } else { ?>
+                <li><a href="account.php" class='a-btn'>Account</a></li>
+                <li><a href="logout.php" class='a-btn'>Logout</a></li>
+            <?php } ?>
         </ul>
     </div>
     <hr>

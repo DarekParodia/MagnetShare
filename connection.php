@@ -1,5 +1,4 @@
 <?php
-
 function connectToDatabase()
 {
     $servername = "localhost";
@@ -53,4 +52,49 @@ function getAccountByEmail($conn, $email)
         // Account not found, return false
         return false;
     }
+}
+
+function loginUser($conn, $login)
+{
+    $data = getAccount($conn, $login); // get account data
+
+    // check if data exists
+    if (!$data) {
+        return false;
+    }
+
+    // set session variables
+    $_SESSION['login'] = $login;
+    $_SESSION['id'] = $data['id'];
+    $_SESSION['email'] = $data['email'];
+    $_SESSION['profile_pic'] = $data['profile_pic'];
+    $_SESSION['logged_in'] = true;
+
+    // redirect
+    header('Location: account.php');
+}
+
+function logoutUser()
+{
+    // remove all session variables
+    session_unset();
+
+    // destroy the session
+    session_destroy();
+
+    // redirect
+    header('Location: login.php');
+}
+
+function loginRedirect()
+{
+    // if user arleady logged in, redirect to account.php
+    if (isUserLoggedIn()) {
+        header('Location: account.php');
+    }
+}
+
+function isUserLoggedIn()
+{
+    return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true;
 }
