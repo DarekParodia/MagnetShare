@@ -1,4 +1,6 @@
 <?php
+$login_regex = "/^[a-zA-Z0-9]{3,20}$/";
+$password_regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/";
 function connectToDatabase()
 {
     $servername = "localhost";
@@ -91,10 +93,21 @@ function loginRedirect()
     // if user arleady logged in, redirect to account.php
     if (isUserLoggedIn()) {
         header('Location: account.php');
+        exit();
     }
 }
 
 function isUserLoggedIn()
 {
     return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true;
+}
+
+function getLoginRegex()
+{
+    return $$GLOBALS['login_regex'];
+}
+
+function getPasswordRegex()
+{
+    return $$GLOBALS['password_regex'];
 }

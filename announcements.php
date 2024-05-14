@@ -27,6 +27,11 @@ function regexMismatch()
 {
     return "<p class='error'>Password must contain only letters and digits, and be 3 to 20 characters long</p>";
 }
+
+function invalidLoginOrPassword()
+{
+    return "<p class='error'>Invalid login or password</p>";
+}
 function invalidLogin()
 {
     return "<p class='error'>Invalid login</p>";

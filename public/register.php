@@ -3,20 +3,10 @@ session_start();
 require_once(__DIR__ . '/../connection.php');
 require_once(__DIR__ . '/../announcements.php');
 
+loginRedirect(); // if user is logged in, redirect to account.php
+
 function handleRegister()
 {
-    /**
-     * Regular expressions for validating login and password fields.
-     *
-     * $login_regex: This regular expression validates the login field. It allows only alphanumeric characters (a-z, A-Z, 0-9) and must be between 3 and 20 characters long.
-     *
-     * $password_regex: This regular expression validates the password field. It requires at least one lowercase letter, one uppercase letter, one digit, and must be at least 8 characters long. It allows alphanumeric characters (a-z, A-Z, 0-9).
-     */
-    $login_regex = "/^[a-zA-Z0-9]{3,20}$/";
-    $password_regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/";
-
-    loginRedirect(); // if user is logged in, redirect to account.php
-
     if (isset($_POST['login']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password2'])) {
         $login = $_POST['login'];
         $email = $_POST['email'];
@@ -26,9 +16,9 @@ function handleRegister()
         // Validate the input
         if ($password != $password2) {
             echo mismatchedPasswords();
-        } else if (!preg_match($login_regex, $login)) {
+        } else if (!preg_match(getLoginRegex(), $login)) {
             echo loginRegexMismatch();
-        } else if (!preg_match($password_regex, $password)) {
+        } else if (!preg_match(getPasswordRegex(), $password)) {
             echo passwordRegexMismatch()();
         } else {
             $conn = connectToDatabase(); // Connect to the database
