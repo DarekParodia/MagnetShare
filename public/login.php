@@ -4,6 +4,7 @@ require_once(__DIR__ . '/../connection.php');
 require_once(__DIR__ . '/../announcements.php');
 
 loginRedirect();
+$conn = connectToDatabase(); // Connect to the database
 
 function handleLogin()
 {
@@ -11,7 +12,11 @@ function handleLogin()
         $login = $_POST['login'];
         $password = $_POST['password'];
 
-        $conn = connectToDatabase(); // Connect to the database
+        if (empty($login) || empty($password)) {
+            echo 'Please fill in all fields';
+            return;
+        }
+        $conn = $GLOBALS['conn'];
 
         $account = getAccount($conn, $login); // Get account data
 
@@ -25,6 +30,7 @@ function handleLogin()
         } else {
             echo invalidPassword();
         }
+        mysqli_close($conn);
     }
 }
 ?>

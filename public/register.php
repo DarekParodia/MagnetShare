@@ -5,6 +5,7 @@ require_once(__DIR__ . '/../announcements.php');
 
 loginRedirect(); // if user is logged in, redirect to account.php
 
+$conn = connectToDatabase(); // Connect to the database
 function handleRegister()
 {
     if (isset($_POST['login']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password2'])) {
@@ -21,7 +22,7 @@ function handleRegister()
         } else if (!preg_match(getPasswordRegex(), $password)) {
             echo passwordRegexMismatch()();
         } else {
-            $conn = connectToDatabase(); // Connect to the database
+            $conn = $GLOBALS['conn'];
 
             if (getAccountByLogin($conn, $login) != false) {
                 echo accountExists();
@@ -39,6 +40,7 @@ function handleRegister()
             } else {
                 echo error($conn->error);
             }
+            mysqli_close($conn);
         }
     }
 }

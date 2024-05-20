@@ -67,3 +67,71 @@ button {
 .success {
     color: rgb(64, 214, 64);
 }
+
+.a-btn {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.brither {
+    color: #7a7a7a;
+}
+
+.div-side-padd {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.div-side-marg {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.cool-input {
+    border: 1px solid var(--secondary-color);
+    border-radius: 6px;
+    padding: 5px;
+    width: calc(100% - 10px);
+}
+
+.cool-textarea {
+    resize: none;
+    border: 1px solid var(--secondary-color);
+    border-radius: 6px;
+    padding: 5px;
+    width: calc(100% - 10px);
+    height: 200px;
+}
+
+.cool-select {
+    border: 1px solid var(--secondary-color);
+    border-radius: 6px;
+    padding: 5px;
+    width: 100%;
+}
+
+.wide-search {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subbutton {
+    padding: 5px 20px;
+    margin: 0px;
+    border: 1px solid var(--secondary-color);
+    cursor: pointer;
+    width: 120px;
+}
+
+.bottom-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.top-marg {
+    margin-top: 10px;
+}

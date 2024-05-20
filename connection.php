@@ -76,6 +76,19 @@ function loginUser($conn, $login)
     header('Location: account.php');
 }
 
+function getCategories($conn)
+{
+    $query = "SELECT * FROM categories";
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) > 0) {
+        // Categories found, return the data
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        // Categories not found, return false
+        return false;
+    }
+}
+
 function logoutUser()
 {
     // remove all session variables
@@ -91,15 +104,24 @@ function logoutUser()
 function loginRedirect()
 {
     // if user arleady logged in, redirect to account.php
-    if (isUserLoggedIn()) {
+    if (isUserLoggedIn() == true) {
         header('Location: account.php');
+        exit();
+    }
+}
+
+function notLoggedInRedirect()
+{
+    // if user is not logged in, redirect to login.php
+    if (isUserLoggedIn() == false) {
+        header('Location: login.php');
         exit();
     }
 }
 
 function isUserLoggedIn()
 {
-    return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true;
+    return (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) ? true : false;
 }
 
 function getLoginRegex()
@@ -110,4 +132,13 @@ function getLoginRegex()
 function getPasswordRegex()
 {
     return $$GLOBALS['password_regex'];
+}
+
+
+// accesirues
+function printArrayToConsole($array)
+{
+    echo '<script>';
+    echo 'console.log(' . json_encode($array) . ')';
+    echo '</script>';
 }

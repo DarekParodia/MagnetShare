@@ -2,6 +2,8 @@
 session_start();
 session_destroy();
 session_regenerate_id();
+// remove cookies
+setcookie('PHPSESSID', '', time() - 3600, '/');
 header('Location: index.php');
 ?>
 <!DOCTYPE html>
