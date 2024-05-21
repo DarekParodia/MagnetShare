@@ -111,6 +111,23 @@ button {
     width: 100%;
 }
 
+.cool-ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.cool-ul li {
+    padding: 5px;
+    border-bottom: 1px solid var(--secondary-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cool-ul li:last-child {
+    border-bottom: none;
+}
+
 .wide-search {
     display: flex;
     flex-direction: row;
@@ -134,4 +151,12 @@ button {
 }
 .top-marg {
     margin-top: 10px;
+}
+
+.div-text-center {
+    text-align: center;
+}
+
+.quarter-width {
+    width: 25%;
 }

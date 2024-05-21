@@ -142,3 +142,8 @@ function printArrayToConsole($array)
     echo 'console.log(' . json_encode($array) . ')';
     echo '</script>';
 }
+
+function toNiceDate($date)
+{
+    return date('d.m.Y', strtotime($date));
+}
