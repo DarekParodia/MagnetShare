@@ -3,14 +3,21 @@ require_once(__DIR__ . '/../connection.php');
 session_start();
 notLoggedInRedirect();
 
+if (!isset($_GET['name'])) {
+    header('Location: account.php?name=' . $_SESSION['login']);
+    exit();
+}
+
 $conn = connectToDatabase(); // Connect to the database
 $has_magnets = false;
 $magnets = getMagnets();
 
+$account_owner = $_GET['name'] == $_SESSION['login'];
+
 function getMagnets()
 {
     $conn = $GLOBALS['conn'];
-    $sql = "SELECT torrents.name, torrents.size, torrents.seeders, torrents.leenchers, torrents.upload_date, categories.name AS category_name, users.username AS author FROM torrents INNER JOIN categories ON torrents.category_id = categories.id INNER JOIN users ON torrents.user_id = users.id WHERE torrents.user_id = '$_SESSION[id]';";
+    $sql = "SELECT torrents.name, torrents.size, torrents.seeders, torrents.leenchers, torrents.upload_date, categories.name AS category_name, users.username AS author FROM torrents INNER JOIN categories ON torrents.category_id = categories.id INNER JOIN users ON torrents.user_id = users.id WHERE users.username = '$_GET[name]';";
     $result = mysqli_query($conn, $sql);
     $magnets = mysqli_fetch_all($result, MYSQLI_ASSOC);
     if ($magnets) {
@@ -33,11 +40,19 @@ function getMagnets()
             <?php include '../partials/header.php'; ?>
             <?php include '../partials/nav.php'; ?>
             <div class='center-content'>
-                <h2>Welcome <span class="brither"><?php echo $_SESSION['login'] ?></span>!</h2>
-                <div>
-                    <a href="logout.php" class='a-btn'>Logout</a>
-                </div>
-                <p>Your Magnets:</p>
+                <?php if ($account_owner) { ?>
+
+                    <h2>Welcome <span class="brither"><?php echo $_SESSION['login'] ?></span>!</h2>
+                    <div>
+                        <a href="logout.php" class='a-btn'>Logout</a>
+                    </div>
+                    <p>Your Magnets:</p>
+                <?php } else { ?>
+
+                    <h2>Account: <span class="brither"><?php echo $_GET['name'] ?></span></h2>
+                    <p>Magnets:</p>
+                <?php } ?>
+
                 <?php if ($has_magnets) { ?>
                     <table class="result-table">
                         <thead>

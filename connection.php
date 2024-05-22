@@ -126,12 +126,12 @@ function isUserLoggedIn()
 
 function getLoginRegex()
 {
-    return $$GLOBALS['login_regex'];
+    return $GLOBALS['login_regex'];
 }
 
 function getPasswordRegex()
 {
-    return $$GLOBALS['password_regex'];
+    return $GLOBALS['password_regex'];
 }
 
 

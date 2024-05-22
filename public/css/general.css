@@ -160,3 +160,43 @@ button {
 .quarter-width {
     width: 25%;
 }
+
+.full-width {
+    width: 100%;
+}
+
+.very-tiny-deletion-confirmation-button {
+    padding: 5px 10px;
+    margin: 0px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+    cursor: pointer;
+    width: fit-content;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+}
+
+.very-tiny-deletion-confirmation-button:hover {
+    background-color: var(--bg-color);
+}
+
+.very-very-big-deletion-cancelation-a-button {
+    padding: 5px 10px;
+    margin: 0px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 500;
+}
+
+.very-very-big-deletion-cancelation-a-button:hover {
+    background-color: var(--bg-color);
+}
+
+.max-400 {
+    max-width: 400px;
+}
