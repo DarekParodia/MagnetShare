@@ -5,7 +5,6 @@
             <li><a href="upload.php" class='a-btn'>Upload</a></li>
             <li><a href="index.php" class='a-btn'>Search</a></li>
             <li><a href="about.php" class='a-btn'>About</a></li>
-            <li><a href="contact.php" class='a-btn'>Contact</a></li>
         </ul>
         <ul>
             <?php require_once(__DIR__ . '/../connection.php');

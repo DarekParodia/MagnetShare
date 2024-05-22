@@ -15,7 +15,7 @@ function handleRegister()
         $password2 = $_POST['password2'];
 
         // Validate the input
-        if ($password != $password2) {
+        if (password_hash($password, PASSWORD_BCRYPT) != password_hash($password2, PASSWORD_BCRYPT)) {
             echo mismatchedPasswords();
         } else if (!preg_match(getLoginRegex(), $login)) {
             echo loginRegexMismatch();
@@ -33,6 +33,15 @@ function handleRegister()
             }
 
             $password = password_hash($password, PASSWORD_BCRYPT); // Hash the password
+
+            // mysqli_real_escape_string() is used to prevent SQL injection
+            $login = mysqli_real_escape_string($conn, $login);
+            $email = mysqli_real_escape_string($conn, $email);
+
+            // strip tags to prevent XSS
+            $login = strip_tags($login);
+            $email = strip_tags($email);
+
             $sql = "INSERT INTO users (username, email, password) VALUES ('$login', '$email', '$password')";
             if ($conn->query($sql) === TRUE) {
                 echo accountCreated();

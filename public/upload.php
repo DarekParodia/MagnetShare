@@ -13,10 +13,10 @@ function handleUpload()
     $magnet_regex = '/^magnet:\?xt=urn:(.*)$/';
     $max_description_length = 1500;
     $max_magnet_length = 1000;
-    $name_regex = "/^[a-zA-Z0-9]{3,50}$/";
+    $name_regex = "/^[a-zA-Z0-9\s\p{P}]{3,50}$/u";
     $tag_regex = "/^[a-zA-Z0-9]{3,50}$/";
     $max_tags = 500;
-    $description_regex = "/^[a-zA-Z0-9]{3,1500}$/";
+    $description_regex = "/^[a-zA-Z0-9\s\p{P}]{3,1500}$/u";
 
     if (isset($_POST['magnet']) && isset($_POST['description']) && isset($_POST['name']) && isset($_POST['tags']) && isset($_POST['category'])) {
         $name = $_POST['name'];
@@ -103,6 +103,16 @@ function handleUpload()
             return false;
         }
 
+        // mysqli_real_escape_string for security
+        $name = mysqli_real_escape_string($conn, $name);
+        $magnet = mysqli_real_escape_string($conn, $magnet);
+        $description = mysqli_real_escape_string($conn, $description);
+
+        // strip tags
+        $name = strip_tags($name);
+        $magnet = strip_tags($magnet);
+        $description = strip_tags($description);
+
         $sql = "INSERT INTO torrents (user_id, name, description, magnet, upload_date, category_id) VALUES ('" . $_SESSION['id'] . "', '$name', '$description', '$magnet' , '" . date('Y-m-d H:i:s') . "', '$category');";
 
         $result = mysqli_query($conn, $sql);
@@ -127,6 +137,12 @@ function handleUpload()
             $tag_sql = "SELECT * FROM tags WHERE name = '$tag'";
             $result = mysqli_query($conn, $tag_sql);
             if (mysqli_num_rows($result) == 0) {
+                // mysqli_real_escape_string for security
+                $tag = mysqli_real_escape_string($conn, $tag);
+
+                // strip tags
+                $tag = strip_tags($tag);
+
                 $tag_sql = "INSERT INTO tags (name) VALUES ('$tag')";
                 $result = mysqli_query($conn, $tag_sql);
                 if (!$result) {
